@@ -9,6 +9,8 @@ import com.example.petclinic.domain.model.Proprietaire;
 import com.example.petclinic.domain.port.TypeAnimalPort;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ProprietaireController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProprietaireController.class);
 
     private final RechercherProprietaire rechercherProprietaire;
     private final CreerProprietaire creerProprietaire;
@@ -41,6 +45,7 @@ public class ProprietaireController {
 
     @GetMapping({"/", "/proprietaires"})
     public String rechercher(@RequestParam(defaultValue = "") String nom, Model modele) {
+        LOGGER.info("Recherche des proprietaires");
         modele.addAttribute("proprietaires", rechercherProprietaire.executer(nom));
         modele.addAttribute("nom", nom);
         return "proprietaires/liste";
