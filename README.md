@@ -72,25 +72,24 @@ Les types proposés dans le formulaire **Enregistrer un animal** sont chargés d
 ./gradlew test
 ```
 
+Pour démarrer l'application en vérifiant d'abord que son port est disponible :
+```shell
+just run
+```
+
+La recette contrôle le port backend `8080`.\
+Si un processus Java, Node, NPM ou Vite l'utilise déjà, elle lui envoie un arrêt gracieux, puis force l'arrêt si
+le port n'est pas libéré.\
+Elle refuse d'arrêter automatiquement un autre type de processus.\
+
+Le contrôle peut être testé sans démarrer l'application avec :
+```shell
+just test-ports
+```
+
 ## Tests de performance
 
 La documentation des tests de performance est disponible dans [`performance/README.md`](performance/README.md).\
 Elle décrit l'installation de k6, la préparation des jeux de données et les tâches de lancement et de génération des rapports.
 
 <img src="doc/img/rapport-performance.png" alt="Rapport de performance" width="600px">
-
-## Formater
-
-Spotless formate automatiquement les fichiers de production Java et normalise les templates HTML, les scripts SQL et les fichiers de configuration :
-
-```shell
-./gradlew spotlessApply
-```
-
-Pour vérifier le formatage sans modifier les fichiers :
-
-```shell
-./gradlew spotlessCheck
-```
-
-Les commandes équivalentes sont disponibles avec `just format` et `just format-check`.

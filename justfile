@@ -5,29 +5,26 @@ export NOMINAL_DURATION_MINUTES := env_var_or_default("NOMINAL_DURATION_MINUTES"
 default:
     @just --list
 
-# Installe et active la version Java définie dans .sdkmanrc.
 java:
     @source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk env install && sdk env
 
-# Compile le code sans exécuter les tests.
 build:
     ./gradlew build -x test
 
-# Exécute tous les tests.
 test:
     ./gradlew test
 
-# Nettoie les artefacts Gradle puis reconstruit et teste l'application.
 check: clean
     ./gradlew build
 
-# Démarre l'application Spring Boot sur le port 8080.
+# Vérifie les ports applicatifs ne sont pas utilisés, puis démarre Spring Boot.
 run:
+    ./scripts/verifier-ports-application.sh
     ./gradlew bootRun
 
-# Démarre l'application avec le profil de développement.
-dev:
-    ./gradlew bootRun --args='--spring.thymeleaf.cache=false'
+# Vérifie que les ports applicatifs sont disponibles.
+test-ports:
+    ./scripts/verifier-ports-application.test.sh
 
 # Lance tous les scénarios k6 contre l'application démarrée.
 performance-all:
@@ -44,11 +41,9 @@ performance-run:
 performance-reports:
     performance/scripts/generer-rapport.sh
 
-# Supprime les répertoires de build Gradle.
 clean:
     ./gradlew clean
 
-# Affiche les tâches Gradle disponibles.
 tasks:
     ./gradlew tasks
 
@@ -56,6 +51,5 @@ tasks:
 format:
     ./gradlew spotlessApply
 
-# Vérifie que les fichiers de production sont correctement formatés.
 format-check:
     ./gradlew spotlessCheck
