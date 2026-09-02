@@ -1,5 +1,7 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
+export NOMINAL_DURATION_MINUTES := env_var_or_default("NOMINAL_DURATION_MINUTES", "2")
+
 default:
     @just --list
 
@@ -26,6 +28,21 @@ run:
 # Démarre l'application avec le profil de développement.
 dev:
     ./gradlew bootRun --args='--spring.thymeleaf.cache=false'
+
+# Lance tous les scénarios k6 contre l'application démarrée.
+performance-all:
+    performance/scripts/lancer-scenarios.sh
+
+performance-nominal:
+    performance/scripts/lancer-nominal.sh
+
+# Prépare les données, démarre l'application et exécute toute la campagne.
+performance-run:
+    performance/scripts/lancer-campagne.sh
+
+# Génère le rapport depuis les synthèses k6 disponibles.
+performance-reports:
+    performance/scripts/generer-rapport.sh
 
 # Supprime les répertoires de build Gradle.
 clean:

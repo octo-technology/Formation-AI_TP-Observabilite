@@ -4,7 +4,9 @@ Application web Spring Boot inspirée de [Spring Petclinic](https://github.com/s
 
 ## Analyse de la reference
 
-La référence est une application MVC Spring Boot construite autour de propriétaires, animaux, vétérinaires et visites. Elle utilise Spring Data JPA pour la persistance, Thymeleaf pour les écrans et initialise une base H2 en mémoire avec des données de démonstration. Cette version conserve ces parcours essentiels, mais retire les fonctionnalités hors périmètre (Maven, MySQL, PostgreSQL, Docker, cache et compilation CSS).
+La référence est une application MVC Spring Boot construite autour de propriétaires, animaux, vétérinaires et visites.\
+Elle utilise Spring Data JPA pour la persistance, Thymeleaf pour les écrans et initialise une base H2 en mémoire avec des données de démonstration.\
+Cette version conserve ces parcours essentiels, mais retire les fonctionnalités hors périmètre (Maven, MySQL, PostgreSQL, Docker, cache et compilation CSS).
 
 ## Choix techniques
 
@@ -16,11 +18,13 @@ La référence est une application MVC Spring Boot construite autour de proprié
 
 ## Démarrer
 
-```bash
+```shell
 ./gradlew bootRun
 ```
 
 Puis ouvrir http://localhost:8080.
+
+<img src="doc/img/page-accueil.png" alt="Page d'accueil" width="600px">
 
 Écrans disponibles :
 
@@ -34,7 +38,7 @@ Puis ouvrir http://localhost:8080.
 
 L'application doit être démarrée avant d'ouvrir la console, car la base de données est stockée en mémoire :
 
-```bash
+```shell
 ./gradlew bootRun
 ```
 
@@ -59,25 +63,33 @@ Le fichier `src/main/resources/schema.sql` définit le schéma relationnel de l'
 - la table d'association `veterinaires_specialites` ;
 - les clés primaires, clés étrangères, contraintes d'unicité et index des relations.
 
-Hibernate ne génère pas le schéma (`spring.jpa.hibernate.ddl-auto: none`). Les types proposés dans le formulaire **Enregistrer un animal** sont chargés dynamiquement depuis la table `types_animaux`.
+Hibernate ne génère pas le schéma (`spring.jpa.hibernate.ddl-auto: none`).\
+Les types proposés dans le formulaire **Enregistrer un animal** sont chargés dynamiquement depuis la table `types_animaux`.
 
 ## Vérifier
 
-```bash
+```shell
 ./gradlew test
 ```
+
+## Tests de performance
+
+La documentation des tests de performance est disponible dans [`performance/README.md`](performance/README.md).\
+Elle décrit l'installation de k6, la préparation des jeux de données et les tâches de lancement et de génération des rapports.
+
+<img src="doc/img/rapport-performance.png" alt="Rapport de performance" width="600px">
 
 ## Formater
 
 Spotless formate automatiquement les fichiers de production Java et normalise les templates HTML, les scripts SQL et les fichiers de configuration :
 
-```bash
+```shell
 ./gradlew spotlessApply
 ```
 
 Pour vérifier le formatage sans modifier les fichiers :
 
-```bash
+```shell
 ./gradlew spotlessCheck
 ```
 
