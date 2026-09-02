@@ -52,5 +52,9 @@ nbdist/
 *.swo
 *.orig
 
+performance/data/*.sql
+performance/rapports/
+performance/logs/
+
 .opencode/
 /opencode.json
