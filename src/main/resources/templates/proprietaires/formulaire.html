@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Petclinic | Nouveau propriétaire</title>
+    <link rel="stylesheet" th:href="@{/css/petclinic.css}" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" th:href="@{/}">Petclinic</a>
+      <nav>
+        <a class="active" th:href="@{/proprietaires}">Propriétaires</a
+        ><a th:href="@{/veterinaires}">Vétérinaires</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Propriétaires</p>
+        <h1>Ajouter un propriétaire</h1>
+      </section>
+      <form
+        class="card form"
+        method="post"
+        th:action="@{/proprietaires}"
+        th:object="${proprietaire}">
+        <div class="grid">
+          <label>Prénom<input th:field="*{prenom}" /><small th:errors="*{prenom}"></small></label
+          ><label>Nom<input th:field="*{nom}" /><small th:errors="*{nom}"></small></label
+          ><label
+            >Adresse<input th:field="*{adresse}" /><small th:errors="*{adresse}"></small></label
+          ><label>Ville<input th:field="*{ville}" /><small th:errors="*{ville}"></small></label
+          ><label
+            >Téléphone<input th:field="*{telephone}" /><small th:errors="*{telephone}"></small
+          ></label>
+        </div>
+        <div class="actions">
+          <a class="button secondary" th:href="@{/proprietaires}">Annuler</a
+          ><button type="submit">Créer le propriétaire</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

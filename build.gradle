@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.diffplug.spotless' version '7.0.2'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+}
+
+tasks.named('test') { useJUnitPlatform() }
+
+spotless {
+    java {
+        target 'src/main/**/*.java'
+        googleJavaFormat('1.27.0').aosp()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    format 'productionText', {
+        target 'src/main/**/*.sql', 'src/main/**/*.properties',
+                'src/main/**/*.yml', 'src/main/**/*.yaml', 'src/main/**/*.css'
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    format 'html', {
+        target 'src/main/**/*.html'
+        prettier('3.5.3').config([
+            'parser': 'html',
+            'printWidth': 100,
+            'singleQuote': false,
+            'bracketSameLine': true
+        ])
+        endWithNewline()
+    }
+}

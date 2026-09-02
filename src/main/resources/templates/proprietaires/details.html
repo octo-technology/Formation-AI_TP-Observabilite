@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Petclinic | Propriétaire</title>
+    <link rel="stylesheet" th:href="@{/css/petclinic.css}" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" th:href="@{/}">Petclinic</a>
+      <nav>
+        <a class="active" th:href="@{/proprietaires}">Propriétaires</a
+        ><a th:href="@{/veterinaires}">Vétérinaires</a>
+      </nav>
+    </header>
+    <main>
+      <a class="back" th:href="@{/proprietaires}">← Tous les propriétaires</a>
+      <section class="hero compact">
+        <p class="eyebrow">Fiche propriétaire</p>
+        <h1 th:text="${proprietaire.prenom + ' ' + proprietaire.nom}">Propriétaire</h1>
+        <p
+          class="intro"
+          th:text="${proprietaire.adresse + ', ' + proprietaire.ville + ' · ' + proprietaire.telephone}">
+          Coordonnées
+        </p>
+      </section>
+      <section class="card">
+        <div class="section-heading">
+          <h2>Animaux</h2>
+          <span th:text="${proprietaire.animaux.size()} + ' compagnon(s)'"></span>
+        </div>
+        <p class="empty" th:if="${proprietaire.animaux.isEmpty()}">
+          Aucun animal n'est encore enregistré.
+        </p>
+        <div class="pet" th:each="animal : ${proprietaire.animaux}">
+          <div>
+            <h3 th:text="${animal.nom}">Animal</h3>
+            <p th:text="${animal.type.libelle + ' · Né le ' + animal.dateNaissance}">
+              Informations
+            </p>
+          </div>
+          <div>
+            <strong>Visites</strong>
+            <ul>
+              <li
+                th:each="visite : ${animal.visites}"
+                th:text="${visite.date + ' - ' + visite.motif}">
+                Visite
+              </li>
+              <li th:if="${animal.visites.isEmpty()}">Aucune visite</li>
+            </ul>
+            <form
+              class="visit-form"
+              method="post"
+              th:action="@{/proprietaires/{proprietaireId}/animaux/{animalId}/visites(proprietaireId=${proprietaire.id},animalId=${animal.id})}">
+              <input name="date" type="date" required /><input
+                name="motif"
+                placeholder="Motif de la visite"
+                required /><button type="submit">Ajouter la visite</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <form
+        class="card form"
+        method="post"
+        th:action="@{/proprietaires/{proprietaireId}/animaux(proprietaireId=${proprietaire.id})}">
+        <h2>Enregistrer un animal</h2>
+        <div class="grid">
+          <label>Nom<input name="nom" required /></label
+          ><label
+            >Type<select name="type" required>
+              <option value="">Sélectionner un type</option>
+              <option
+                th:each="typeAnimal : ${typesAnimaux}"
+                th:value="${typeAnimal.libelle}"
+                th:text="${typeAnimal.libelle}">
+                Type
+              </option>
+            </select></label
+          ><label>Date de naissance<input name="dateNaissance" type="date" required /></label>
+        </div>
+        <button type="submit">Ajouter l'animal</button>
+      </form>
+    </main>
+  </body>
+</html>

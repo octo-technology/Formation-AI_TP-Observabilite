@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Petclinic | Vétérinaires</title>
+    <link rel="stylesheet" th:href="@{/css/petclinic.css}" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" th:href="@{/}">Petclinic</a>
+      <nav>
+        <a th:href="@{/proprietaires}">Propriétaires</a
+        ><a class="active" th:href="@{/veterinaires}">Vétérinaires</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">L'équipe</p>
+        <h1>Vétérinaires</h1>
+        <p class="intro">Découvrez les spécialistes qui prennent soin de chaque animal.</p>
+      </section>
+      <section class="people">
+        <article class="person" th:each="veterinaire : ${veterinaires}">
+          <span
+            class="avatar"
+            th:text="${veterinaire.prenom.substring(0, 1) + veterinaire.nom.substring(0, 1)}"
+            >VL</span
+          >
+          <h2 th:text="${veterinaire.prenom + ' ' + veterinaire.nom}">Vétérinaire</h2>
+          <p
+            th:text="${veterinaire.specialites.isEmpty() ? 'Médecine générale' : veterinaire.specialites.size() + ' spécialité(s)'}">
+            Médecine générale
+          </p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
