@@ -21,7 +21,7 @@ Cette version conserve ces parcours essentiels, mais retire les fonctionnalités
 - [**K6**](https://grafana.com/docs/k6)
 - **Docker**
 - [Just](https://www.sfeir.dev/just-outil-automatisation-que-jutilise-partout#et-make-dans-tout-%C3%A7a)
-- [cf. installations](performance/installation-k6.md)
+- [cf. installations](performance/doc/installation-k6.md)
 
 ---
 
@@ -119,8 +119,7 @@ Elle décrit
 - les tâches de lancement des Scénarios ou de la Campagne nominale
 - la génération des rapports
 
-<img src="doc/img/rapport-performance.png" alt="Rapport de performance" width="400px">
-<img src="doc/img/rapport-campagne-nominale.png" alt="Rapport Campagne nominale" width="460px">
+<img src="doc/img/rapport-performance.png" alt="Rapport de performance" width="300px"> <img src="doc/img/rapport-campagne-nominale.png" alt="Rapport Campagne nominale" width="350px">
 
 ---
 
