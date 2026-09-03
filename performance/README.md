@@ -4,7 +4,7 @@ Cette documentation décrit la préparation et l'exécution des tests de perform
 
 ## Documents
 
-- [Installation de k6](doc/installation-k6.md)
+- [Installation de k6 et autres outils](doc/installation-k6.md)
 - [Création des jeux de données](doc/jeux-de-donnees.md)
 - [Scénarios de tests de performance](doc/scenarios.md)
 - [Rapport final des tests](rapports/rapport-final.md)
@@ -171,7 +171,12 @@ Le générateur de rapport est un script Bash : `performance/scripts/generer-rap
 
 </details>
 
-## Lancer la campagne complète avec Just
+## Scénarios
+
+- Les scénarios k6 sont disponibles dans `performance/scenarios/k6/`
+- Leur liste et leurs objectifs sont détaillés dans [scenarios.md](doc/scenarios.md)
+
+## Lancement de tous les Scénarios et production du rapport final
 
 ```shell
 just performance-run
@@ -194,35 +199,33 @@ Le code de sortie est `0` lorsque l'orchestration est terminée et le rapport g�
 
 </details>
 
-## Scénarios
 
-- Les scénarios k6 sont disponibles dans `performance/scenarios/k6/`
-- Leur liste et leurs objectifs sont détaillés dans [scenarios.md](doc/scenarios.md)
+## Lancement de la Campagne nominale et production du rapport
 
-## Campagne nominale
-
-La campagne nominale peut être lancée directement avec `just performance-nominal`.
+```shell
+just performance-nominale
+```
 
 <details>
   <summary><b>🔍️ Détails</b></summary>
 - Le script démarre automatiquement l'application avec le profil `performance` si elle n'est pas déjà disponible, puis l'arrête uniquement s'il l'a lui-même démarrée
 - Il retourne `0` par défaut lorsque la campagne et la génération du rapport sont terminées, même si un seuil de performance est dépassé ; les seuils restent visibles dans le rapport.\
-Pour un mode strict, utiliser `FAIL_ON_PERFORMANCE_THRESHOLDS=true just performance-nominal` :
+Pour un mode strict, utiliser `FAIL_ON_PERFORMANCE_THRESHOLDS=true just performance-nominale` :
 
 Pour accélérer les phases de construction et d'itération, elle monte progressivement jusqu'à 10 utilisateurs virtuels en 15 secondes, maintient cette charge, puis redescend en 15 secondes.
-- Sa durée est configurable en minutes avec `NOMINAL_DURATION_MINUTES` et vaut 1 minute par défaut
+- Sa durée est configurable en minutes avec `NOMINALE_DURATION_MINUTES` et vaut 1 minute par défaut
 - Les résultats sont enregistrés dans `performance/rapports/results/campagne-nominale.json` et `campagne-nominale-summary.json`
 - Le log est écrit dans `performance/logs/campagne-nominale.log` et le rapport dédié est généré dans `performance/rapports/rapport-campagne-nominale.md`
 
 Exemples :
 ```shell
-just performance-nominal
-NOMINAL_DURATION_MINUTES=5 just performance-nominal
-NOMINAL_DURATION_MINUTES=10 just performance-nominal
+just performance-nominale
+NOMINALE_DURATION_MINUTES=5 just performance-nominale
+NOMINALE_DURATION_MINUTES=10 just performance-nominale
 ```
 
 - La montée et la descente durent chacune 15 secondes
-- La phase de maintien dure donc `NOMINAL_DURATION_MINUTES * 60 - 30` secondes
+- La phase de maintien dure donc `NOMINALE_DURATION_MINUTES * 60 - 30` secondes
 - La variable doit être un entier supérieur ou égal à 1
 
 </details>

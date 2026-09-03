@@ -3,10 +3,10 @@ import http from "k6/http";
 import { baseUrl, optionsParDefaut, valeurUnique } from "./commun.js";
 
 const { iterations, vus, ...optionsSansIterations } = optionsParDefaut;
-const dureeMinutes = Number(__ENV.NOMINAL_DURATION_MINUTES || 1);
+const dureeMinutes = Number(__ENV.NOMINALE_DURATION_MINUTES || 1);
 
 if (!Number.isInteger(dureeMinutes) || dureeMinutes < 1) {
-  throw new Error("NOMINAL_DURATION_MINUTES doit être un entier supérieur ou égal à 1");
+  throw new Error("NOMINALE_DURATION_MINUTES doit être un entier supérieur ou égal à 1");
 }
 
 const dureeMaintienSecondes = dureeMinutes * 60 - 30;

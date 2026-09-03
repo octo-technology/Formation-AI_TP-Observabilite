@@ -5,9 +5,9 @@ repertoire_resultats="performance/rapports/results"
 repertoire_logs="performance/logs"
 base_url="${BASE_URL:-http://localhost:8080}"
 fichier_rapport="${repertoire_resultats}/campagne-nominale-summary.json"
-rapport_nominal="performance/rapports/rapport-campagne-nominale.md"
+rapport_nominale="performance/rapports/rapport-campagne-nominale.md"
 debut_campagne=$(date +%s)
-fichier_log_application="${repertoire_logs}/petclinic-performance-nominal.log"
+fichier_log_application="${repertoire_logs}/petclinic-performance-nominale.log"
 pid_application=""
 
 nettoyer() {
@@ -20,7 +20,7 @@ nettoyer() {
 trap nettoyer EXIT INT TERM
 
 mkdir -p "${repertoire_resultats}" "${repertoire_logs}"
-rm -f "${fichier_rapport}" "${repertoire_resultats}/campagne-nominale.json" "${repertoire_logs}/campagne-nominale.log" "${rapport_nominal}"
+rm -f "${fichier_rapport}" "${repertoire_resultats}/campagne-nominale.json" "${repertoire_logs}/campagne-nominale.log" "${rapport_nominale}"
 if ! curl --fail --silent "${base_url}/proprietaires" >/dev/null 2>&1; then
     ./gradlew bootRun --args='--spring.profiles.active=performance' >"${fichier_log_application}" 2>&1 &
     pid_application=$!
@@ -59,8 +59,8 @@ PERFORMANCE_RESULTS_DIR="${repertoire_resultats}" \
 PERFORMANCE_SUMMARY_FILE="${repertoire_resultats}/campagne-nominale-summary.json" \
 PERFORMANCE_DURATION_SECONDS="$((fin_campagne - debut_campagne))" \
 PERFORMANCE_REPORT_TITLE="Rapport campagne nominale de performance" \
-PERFORMANCE_REPRODUCTION_COMMAND="NOMINAL_DURATION_MINUTES=${NOMINAL_DURATION_MINUTES:-1} just performance-nominal" \
-PERFORMANCE_REPORT_FILE="${rapport_nominal}" \
+PERFORMANCE_REPRODUCTION_COMMAND="NOMINALE_DURATION_MINUTES=${NOMINALE_DURATION_MINUTES:-1} just performance-nominale" \
+PERFORMANCE_REPORT_FILE="${rapport_nominale}" \
     performance/scripts/generer-rapport.sh
 
 if [[ "${FAIL_ON_PERFORMANCE_THRESHOLDS:-false}" == true ]]; then

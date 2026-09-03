@@ -272,12 +272,12 @@ Le script correspondant est `performance/scenarios/k6/parcours-principaux.js`.
 
 Chaque scénario peut être exécuté seul pour diagnostiquer un problème. Une campagne complète combine principalement les scénarios de lecture et une faible proportion d'écritures.
 
-| Profil | Charge | Durée | Usage |
-| --- | ---: | ---: | --- |
-| Smoke | 1 utilisateur virtuel | 30 s | Vérifier la disponibilité et les assertions |
-| Nominal | montée jusqu'à 10 utilisateurs virtuels | 5 min | Établir la référence |
+| Profil    | Charge | Durée | Usage |
+|-----------| ---: | ---: | --- |
+| Smoke     | 1 utilisateur virtuel | 30 s | Vérifier la disponibilité et les assertions |
+| Nominale  | montée jusqu'à 10 utilisateurs virtuels | 5 min | Établir la référence |
 | Endurance | charge nominale | 30 min minimum | Détecter les dérives mémoire et latence |
-| Pic | augmentation brutale | selon campagne | Observer la saturation et la récupération |
+| Pic       | augmentation brutale | selon campagne | Observer la saturation et la récupération |
 
 Répartition initiale recommandée pour le parcours complet :
 
@@ -294,12 +294,12 @@ La création d'un propriétaire est exécutée dans une campagne dédiée afin d
 
 La campagne nominale combine les six parcours selon la répartition recommandée ci-dessus. Pour accélérer les phases de construction et d'itération, elle monte progressivement jusqu'à 10 utilisateurs virtuels en 15 secondes, conserve cette charge pendant 30 secondes, puis redescend en 15 secondes. Sa durée totale est d'environ 1 minute. Afin d'éviter les conflits JPA connus lors d'écritures concurrentes, les ajouts d'animaux et de visites sont effectués uniquement par le VU 1 ; les autres VU réalisent des lectures à la place.
 
-Elle est lancée avec `just performance-nominal`. Le script démarre automatiquement l'application avec le profil `performance` si elle n'est pas déjà disponible. Sa durée est configurable avec `NOMINAL_DURATION_MINUTES` : `1` par défaut, ou `5` et `10` pour des campagnes plus longues.
+Elle est lancée avec `just performance-nominale`. Le script démarre automatiquement l'application avec le profil `performance` si elle n'est pas déjà disponible. Sa durée est configurable avec `NOMINALE_DURATION_MINUTES` : `1` par défaut, ou `5` et `10` pour des campagnes plus longues.
 
 ```shell
-NOMINAL_DURATION_MINUTES=1 just performance-nominal
-NOMINAL_DURATION_MINUTES=5 just performance-nominal
-NOMINAL_DURATION_MINUTES=10 just performance-nominal
+NOMINALE_DURATION_MINUTES=1 just performance-nominale
+NOMINALE_DURATION_MINUTES=5 just performance-nominale
+NOMINALE_DURATION_MINUTES=10 just performance-nominale
 ```
 
 La durée de montée et de descente reste fixée à 15 secondes chacune ; la phase de maintien est calculée pour atteindre la durée totale demandée.
