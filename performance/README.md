@@ -7,7 +7,7 @@ Cette documentation décrit la préparation et l'exécution des tests de perform
 - [Installation de k6 et autres outils](doc/installation-k6.md)
 - [Création des jeux de données](doc/jeux-de-donnees.md)
 - [Scénarios de tests de performance](doc/scenarios.md)
-- [Rapport final des tests](rapports/rapport-final.md)
+- Les rapports créés après les tests de performance se trouveront dans le répertoire `performance/rapports/`
 
 ## Prérequis
 
@@ -208,6 +208,7 @@ just performance-nominale
 
 <details>
   <summary><b>🔍️ Détails</b></summary>
+
 - Le script démarre automatiquement l'application avec le profil `performance` si elle n'est pas déjà disponible, puis l'arrête uniquement s'il l'a lui-même démarrée
 - Il retourne `0` par défaut lorsque la campagne et la génération du rapport sont terminées, même si un seuil de performance est dépassé ; les seuils restent visibles dans le rapport.\
 Pour un mode strict, utiliser `FAIL_ON_PERFORMANCE_THRESHOLDS=true just performance-nominale` :
@@ -217,7 +218,8 @@ Pour accélérer les phases de construction et d'itération, elle monte progress
 - Les résultats sont enregistrés dans `performance/rapports/results/campagne-nominale.json` et `campagne-nominale-summary.json`
 - Le log est écrit dans `performance/logs/campagne-nominale.log` et le rapport dédié est généré dans `performance/rapports/rapport-campagne-nominale.md`
 
-Exemples :
+#### Exemples
+
 ```shell
 just performance-nominale
 NOMINALE_DURATION_MINUTES=5 just performance-nominale
