@@ -1,6 +1,6 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
-export NOMINAL_DURATION_MINUTES := env_var_or_default("NOMINAL_DURATION_MINUTES", "2")
+export NOMINALE_DURATION_MINUTES := env_var_or_default("NOMINALE_DURATION_MINUTES", "2")
 
 default:
     @just --list
@@ -30,8 +30,8 @@ test-ports:
 performance-all:
     performance/scripts/lancer-scenarios.sh
 
-performance-nominal:
-    performance/scripts/lancer-nominal.sh
+performance-nominale:
+    performance/scripts/lancer-nominale.sh
 
 # Prépare les données, démarre l'application et exécute toute la campagne.
 performance-run:
